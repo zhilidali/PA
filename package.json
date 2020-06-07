@@ -1,0 +1,33 @@
+{
+  "name": "promise-a",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/promise.js",
+  "scripts": {
+    "test": "babel-node test/test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/runtime": "^7.10.2",
+    "core-js": "^3.6.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-private-methods": "^7.10.1",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "@types/eslint": "^6.8.1",
+    "@types/prettier": "^2.0.1",
+    "babel-eslint": "^11.0.0-beta.2",
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-proposal": "^2.3.0",
+    "prettier": "^2.0.5",
+    "promises-aplus-tests": "^2.1.2"
+  }
+}

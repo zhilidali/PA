@@ -96,6 +96,15 @@ class Promise {
 
   catch = onRejected => this.then(null, onRejected);
 
+  finally = onFinally =>
+    this.then(
+      value => Promise.resolve(onFinally()).then(() => value),
+      reason =>
+        Promise.resolve(onFinally()).then(() => {
+          throw reason;
+        })
+    );
+
   static reject = e => new Promise((resolve, reject) => reject(e));
   static resolve(v) {
     if (v instanceof Promise) return v;

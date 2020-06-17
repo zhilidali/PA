@@ -105,6 +105,12 @@ class Promise {
         })
     );
 
+  [Symbol.toStringTag] = 'Promise';
+
+  static get [Symbol.species] () {
+    return this;
+  }
+
   static reject = e => new Promise((resolve, reject) => reject(e));
   static resolve(v) {
     if (v instanceof Promise) return v;

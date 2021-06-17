@@ -11,6 +11,6 @@ Adapter.defer = Adapter.deferred = function () {
 };
 
 promisesAplusTests(Adapter, function (err) {
-  console.log(err);
+  err && console.log(err);
   // All done; output is in the console. Or check `err` for number of failures.
 });

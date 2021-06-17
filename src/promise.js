@@ -1,5 +1,7 @@
 class Promise {
   #callbacks = [];
+  '[[PromiseStatus]]' = 'pending';
+
   constructor(executor) {
     const settle = (status, value) => {
       if (this['[[PromiseStatus]]'] === 'pending') {
@@ -10,7 +12,6 @@ class Promise {
     };
     const resolve = value => settle('resolved', value);
     const reject = reason => settle('rejected', reason);
-    this['[[PromiseStatus]]'] = 'pending';
 
     try {
       executor(resolve, reject);
@@ -42,11 +43,12 @@ class Promise {
     return promise2;
   }
 
-  #executeCallback = (onFulfilled, onRejected, promise, resolve, reject) => {
-    const [callback, settle] =
-      this['[[PromiseStatus]]'] === 'resolved'
-        ? [onFulfilled, resolve]
-        : [onRejected, reject];
+  #executeCallback(onFulfilled, onRejected, promise, resolve, reject) {
+    const [callback, settle] = {
+      resolved: [onFulfilled, resolve],
+      rejected: [onRejected, reject],
+    }[this['[[PromiseStatus]]']];
+
     if (typeof callback === 'function') {
       try {
         const x = callback(this['[[PromiseValue]]']);
@@ -57,9 +59,9 @@ class Promise {
     } else {
       settle(this['[[PromiseValue]]']);
     }
-  };
+  }
 
-  #resolutionProcedure = (promise, x, resolve, reject) => {
+  #resolutionProcedure(promise, x, resolve, reject) {
     try {
       if (x === promise) {
         throw new TypeError('Chaining cycle detected for promise');
@@ -82,9 +84,9 @@ class Promise {
     } catch (e) {
       reject(e);
     }
-  };
+  }
 
-  #only = (...fns) => {
+  #only(...fns) {
     let callable = true;
     return fns.map(fn => (...args) => {
       if (callable) {
@@ -92,7 +94,7 @@ class Promise {
         fn(...args);
       }
     });
-  };
+  }
 
   catch = onRejected => this.then(null, onRejected);
 
